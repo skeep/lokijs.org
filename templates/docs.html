@@ -46,7 +46,7 @@
 
 	<div class="span9 col-md-9" class="docs">
 		<h2>Overview</h2>
-		<div class="container-fluid" id="overview">
+		<div id="overview">
 			
 			<p>
 				
@@ -63,12 +63,14 @@
 				LokiJS supports a limited form of indexing for faster document access. The id field in particular is automaticallly populated and indexed, and searched using the binary search algorithm. Other document properties can be indexed for faster search on a particular object field.
 				<h4>New: AngularJS integration</h4>
 				<p>LokiJS is made available to Angular through a 'lokijs' module. Include loki-angular.js and the following should suffice to have a Loki constructor available as a factory:
-				<pre>
+<pre>
+<code class="js">
 var myApp = angular.module('myApp', ['lokijs'])
 .controller('MyController', ['$scope', 'Loki', function ($scope, Loki) {
 	var db = new Loki();
 	// etc.
 }])
+</code>
 </pre>
 				<h4 class="loki">Important: changes in 1.3</h4>
 				<ul>
@@ -83,7 +85,7 @@ var myApp = angular.module('myApp', ['lokijs'])
 			</div>
 
 			<h2>Database class</h2>
-			<div class="container-fluid" id="db">
+			<div id="db">
 				<div><code class="docheading">loki( name [, options] )</code></div>
 				<p>Creating a database is really simple: <code>var db = new loki('NorseGods.json');</code><br>
 					This class is only used to initialise the database, add collections and load/save.<br>
@@ -115,7 +117,7 @@ var myApp = angular.module('myApp', ['lokijs'])
 
 				</div>
 
-				<div class="container-fluid" id="addCollection">
+				<div id="addCollection">
 					<div><code class="docheading">addCollection( name [, options ] )</code></div>
 					<p>
 						Creating a collection is done through the addCollection method, i.e. <code>var lokisChildren = db.addCollection('Children');</code><br>
@@ -148,7 +150,7 @@ var myApp = angular.module('myApp', ['lokijs'])
 
 				</div>
 
-				<div class="container-fluid" id="getCollection">
+				<div id="getCollection">
 					<div><code class="docheading">getCollection( name  )</code></div>
 					<p>
 						Return a collection with the specified name, returns null and emits a warning if collection is not found.
@@ -172,7 +174,7 @@ var myApp = angular.module('myApp', ['lokijs'])
 
 				</div>
 
-				<div class="container-fluid" id="listCollections">
+				<div id="listCollections">
 					<div><code class="docheading">listCollections( )</code></div>
 					<p>
 						Returns an array of all the collections.
@@ -190,7 +192,7 @@ var myApp = angular.module('myApp', ['lokijs'])
 
 				</div>
 
-				<div class="container-fluid" id="loadCollection">
+				<div id="loadCollection">
 					<div><code class="docheading">loadCollection( collection )</code></div>
 					<p>
 						Loads a collection into the db, collection must have a name property so it can be retrieved through <code>getCollection</code>
@@ -209,7 +211,7 @@ var myApp = angular.module('myApp', ['lokijs'])
 
 				</div>
 
-				<div class="container-fluid" id="load">
+				<div id="load">
 					<div><code class="docheading">loadDatabase( [options, callback] )</code></div>
 					<p>Load the database through a persistence adapter and provide a callback handler.</p>
 					<div class="codeExplanation">
@@ -219,16 +221,16 @@ var myApp = angular.module('myApp', ['lokijs'])
 								<td>
 									<strong>options</strong>: (optional) a configuration object which specifies a prototype with which to "inflate" objects.<br />
 									i.e.
-<code><pre>
+<pre><code class="js">
 {
 	users: {
 		proto: User
 	}
 }
-</pre></code>
+</code></pre>
 means that the users collection will inflate all objects as instances of a User constructor. As part of the configuration object you can also specify a property <code>inflate</code> which is a user-specific function to populate objects (this is for complex logic when populating objects). <code>inflate</code> takes a source and a destination object as arguments.
 I.e.<br />
-<code><pre>
+<pre><code class="js">
 {
 	shapes: {
 		proto: Shape,
@@ -240,7 +242,7 @@ I.e.<br />
 		}
 	}
 }
-</pre></code>
+</code></pre>
 <br />								
 									<strong>callback</strong>: (optional) the callback handler
 								</td>
@@ -249,6 +251,7 @@ I.e.<br />
 					</div>
 Example:
 <pre>
+<code class="js">	
 var loki = require('lokijs'),
   db = new loki('test.json'),
   db2 = new loki('test.json');
@@ -269,10 +272,11 @@ db.saveDatabase();
 db2.loadDatabase({}, function () {
   var users2 = db2.getCollection('users')
   console.log(users2.data);
-});</pre>
+});
+</code></pre>
 				</div>
 
-				<div class="container-fluid" id="loadJSON">
+				<div id="loadJSON">
 					<div><code class="docheading">loadJSON( serializedDB, [options] )</code></div>
 					<p>This method takes a json string and loads the database from it. Useful if you want to persist your database somewhere on the cloud and re-initialize it with an ajax call returning JSON.</p>
 					<div class="codeExplanation">
@@ -289,7 +293,7 @@ db2.loadDatabase({}, function () {
 				</div>
 
 
-				<div class="container-fluid" id="save">
+				<div id="save">
 					<div><code class="docheading">saveDatabase( [callback] )</code> also aliased as <code class="docheading">save</code></div>
 					<p>Saves the db, according to the persistence adapter you specified in the Loki constructor. If nothing is specified, Loki tries default methods (fs in Node, localStorage in browser and cordova)</code>.
 					</p>
@@ -305,7 +309,7 @@ db2.loadDatabase({}, function () {
 					</div>
 				</div>
 
-				<div class="container-fluid" id="close">
+				<div id="close">
 					<div><code class="docheading">close( [callback] )</code></div>
 					<p>Emits a close event with an optional callback. Note that this does not destroy the db or collections, it's a utility method that can be called before closing the process in node.js or 'onbeforeunload' in a browser. See <a href="#/docs#collectionevents">events</a>
 					</p>
@@ -322,7 +326,7 @@ db2.loadDatabase({}, function () {
 				</div>
 
 				<h2>Document class</h2>
-				<div class="container-fluid" id="document">
+				<div id="document">
 					<p>
 						A document is just a json object. Once saved the document gets an id and objType property equal to that of the collection the document belongs to.
 						<span class="loki">Note:</span> Meta data is recorded in a meta object in documents. This stores revisions, created and last updated timestamps.
@@ -330,7 +334,7 @@ db2.loadDatabase({}, function () {
 				</div>
 
 				<h2>Collection class</h2>
-				<div class="container-fluid" id="collection">
+				<div id="collection">
 					<div><code class="docheading">Collection</code></div>
 					<p>
 					Collection is a class responsbile for storing data and maintaining indexes on that data.
@@ -338,7 +342,7 @@ db2.loadDatabase({}, function () {
 					</p>
 				</div>
 				
-				<div class="container-fluid" id="insert">
+				<div id="insert">
 					<div><code class="docheading">insert( obj )</code></div>
 					<p>
 						Each record in the database is a document. A document is created through the <code>document()</code> method of the collection class. You can take any object and store it in the collection. While like all nosql databases there's no rule on how documents should be structured it just is good practice to put documents with identical structures in the same collection.
@@ -367,7 +371,7 @@ db2.loadDatabase({}, function () {
 					</p>
 				</div>
 
-				<div class="container-fluid" id="update">
+				<div id="update">
 					<div><code class="docheading">update( obj )</code></div>
 					<p>
 						Updating the document is done by simply updating the properties of a document as the collection only holds a reference to the original object. When you call update on an object though you force a resync of the indexes of the collection.
@@ -391,7 +395,7 @@ db2.loadDatabase({}, function () {
 					</p>
 				</div>
 
-				<div class="container-fluid" id="remove">
+				<div id="remove">
 					<div><code class="docheading">remove( obj )</code></div>
 					<p>
 						Removes a document from the collection, either by id or by object.
@@ -408,7 +412,7 @@ db2.loadDatabase({}, function () {
 					</p>
 				</div>
 
-				<div class="container-fluid" id="remove">
+				<div id="remove">
 					<div><code class="docheading">removeWhere( filter )</code></div>
 					<p>
 						Removes documents that satisfy the filter.
@@ -425,7 +429,7 @@ db2.loadDatabase({}, function () {
 					</p>
 				</div>
 
-				<div class="container-fluid" id="remove">
+				<div id="remove">
 					<div><code class="docheading">removeDataOnly( )</code></div>
 					<p>
 						Removes all documents from the collection but keeps views, resultsets etc.
@@ -433,7 +437,7 @@ db2.loadDatabase({}, function () {
 				</div>
 
 				<h3>Finding documents</h3>
-				<div class="container-fluid" id="get">
+				<div id="get">
 					<div><code class="docheading">get( id )</code></div>
 					<p>
 						You can get a specific document by its id and avail of the faster binary search algorithm used on the id index.
@@ -456,7 +460,7 @@ db2.loadDatabase({}, function () {
 					</p>
 				</div>
 
-				<div class="container-fluid" id="by">
+				<div id="by">
 					<div><code class="docheading">by(field, value)</code></div>
 					<p>
 						Returns the record whose field matches value, if a UniqueIndex for this collection has been created.
@@ -476,7 +480,7 @@ db2.loadDatabase({}, function () {
 					</p>
 				</div>
 
-				<div class="container-fluid" id="by">
+				<div id="by">
 					<div><code class="docheading">ensureUniqueIndex(field)</code></div>
 					<p>
 						It creates a unique index for the field. The index is accessible through <code>Collection.constraints.unique[field]</code><br>
@@ -495,7 +499,7 @@ db2.loadDatabase({}, function () {
 					</p>
 				</div>
 
-				<div class="container-fluid" id="find">
+				<div id="find">
 					<div><code class="docheading">find( query )</code></div>
 					<p>
 						Querying a collection can be done in a mongo style by passing an object literal (supports dot notation for nested properties).<br>
@@ -535,7 +539,7 @@ db2.loadDatabase({}, function () {
 					</p>
 				</div>
 
-				<div class="container-fluid" id="findOne">
+				<div id="findOne">
 					<div><code class="docheading">findObject( template )</code> and <code class="docheading">findObjects( template )</code></div>
 					<p>
 						findObject returns the first document matching the template query, findObjects returns all objects matching the template query.
@@ -552,7 +556,7 @@ db2.loadDatabase({}, function () {
 					</p>
 				</div>
 
-				<div class="container-fluid" id="findOne">
+				<div id="findOne">
 					<div><code class="docheading">findOne( query )</code></div>
 					<p>
 						Returns the first document matching the query.
@@ -569,7 +573,7 @@ db2.loadDatabase({}, function () {
 					</p>
 				</div>
 
-				<div class="container-fluid" id="where">
+				<div id="where">
 					<div><code class="docheading">where( fun )</code></div>
 					<p>
 						Returns a resultset of documents mathing a filter function.
@@ -601,7 +605,7 @@ db2.loadDatabase({}, function () {
 
 
 				<h2>ResultSet, DynamicViews and MapReduce</h2>
-<div class="container-fluid">
+<div>
 	<h2 id="resultset">ResultSet</h2>
 	The resultset class establishes a 'state' for queries and allows mixing and chaining of various operations together.  It provides the user with the 
 	ability to use a fluent-like syntax for expressing query, sorting, and paging criteria.
@@ -824,7 +828,7 @@ Example:
 </div>
 
 
-<div class="container-fluid">
+<div>
 
 	<h2 id="views">DynamicView</h2>
 	<div><code class="docheading">collection.addDynamicView(name [, persistent])</code></div>
@@ -986,7 +990,7 @@ Example:
 </p>
 </div>
 
-<div class="container-fluid" id="joins">
+<div id="joins">
 	<div><code class="docheading">eqJoin(joinData, leftJoinKey, rightJoinKey, mapFun)</code></div>
 	<p>Left joining two sets of data. Join keys can be defined or calculated properties. <code>eqJoin</code> expects the right join key values to be unique.  Otherwise left data will be joined on the last joinData object with that key
 	<div class="codeExplanation">
@@ -1016,7 +1020,7 @@ var result = users.eqJoin(phones.data(), '$loki', 'userId');
 </pre>
 </div>
 
-<div class="container-fluid" id="mapreduce">
+<div id="mapreduce">
 	<div><code class="docheading">mapReduce( mapFun, reduceFun )</code></div>
 	<p>This method is available on both Collection and ResultSet. Map reduce works with two functions, the map function and the reduce function.
 		You can return whatever you want from the map function, and the result will be stored in an array which will be passed in the reduce function.
@@ -1062,7 +1066,7 @@ Lastly, we call <code>var avgAge = users.mapReduce(mapFun, reduceFun);</code>
 </p>
 </div>
 
-<div class="container-fluid" id="properties">
+<div id="properties">
 	<h3>Collection Properties</h3>
 	<p>Collection properties documentation coming soon...</p>
 </div>
